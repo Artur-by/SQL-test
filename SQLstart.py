@@ -28,13 +28,13 @@ class DataBase:
         self.connection.commit()
 
     def getUser(self):
-        sql = "SELECT *FROM users"
+        sql = "SELECT * FROM users"
         self.cursors.execute(sql)
         data = self.cursors.fetchall()
         print(data)
 
     def getLogin(self):
-        sql = "SELECT login FROM users "
+        sql = "SELECT ID, login, password FROM users "
         self.cursors.execute(sql)
         data = self.cursors.fetchall()
         return data
@@ -56,7 +56,9 @@ def input_log():
 
     for el in lst:
         if log == el["login"]:
-            return log
+            pas = el["password"]
+            id = el["ID"]
+            return id, log, pas
             break
     return None
 
@@ -100,19 +102,9 @@ def shifr_password():
             return new_pas
             break
 
-#print(input_password())
-'''read = DataBase()
-lst = read.getUser()
-del read
-print(lst)'''
-
-'''while True:
-    pas = input_password()
-    if pas != None:
-        print(shifr(pas))
-        break'''
 
 
+#print(input_log())
 
 
 

@@ -15,9 +15,13 @@ def start():
             if rezult is None:
                 print('Пользователь с таким логином не обнаружен, попробуйте заново или зарегистрируйтесь')
             else:
-                print(shifr_password())
-                print('Добро пожаловать', )
-                break
+                new_password =shifr_password()
+                if new_password == rezult[2]:
+                    print('Добро пожаловать', )
+                    return rezult[0]
+                else:
+                    print("Неверный пароль")
+
 
         elif enter =="2":
             rezult = input_log()
@@ -25,12 +29,13 @@ def start():
                 print('Пользователь с таким логином уже зарегистрирован')
             else:
                 print(shifr_password())
-                print('Добро пожаловать', )
+                print('Повторите ввод пароля...' )
+
                 break
         else:
             break
 
-start()
+print(start())
 
 
 '''def registr():
