@@ -6,28 +6,31 @@ from  SQLstart import*
 
 
 
-# Start
-print(" Добро пожаловать в систему")
-
-enter = input (" Нажмите 1 для входа в систему или 2 для регистрации ")
-while True:
-    if enter =="1":
-        rezult = input_log()
-        print(rezult)
-            #if rezult is None:
-            #    print(' Пользователь с таким логином не обнаружен, попробуйте заново или зарегистрируйтесь')
-            #else:
-            #    print(' Добро пожаловать',rezult )
-
-    elif enter =="2":
-        input_log()
-        while True:
-            pas = input_password()
-            if pas != None:
-                print(shifr(pas))
+def start():
+    print(" Добро пожаловать в систему")
+    while True:
+        enter = input ("Нажмите 1 для входа в систему или 2 для регистрации ")
+        if enter =="1":
+            rezult = input_log()
+            if rezult is None:
+                print('Пользователь с таким логином не обнаружен, попробуйте заново или зарегистрируйтесь')
+            else:
+                print(shifr_password())
+                print('Добро пожаловать', )
                 break
-    else:
-        break
+
+        elif enter =="2":
+            rezult = input_log()
+            if rezult is not None:
+                print('Пользователь с таким логином уже зарегистрирован')
+            else:
+                print(shifr_password())
+                print('Добро пожаловать', )
+                break
+        else:
+            break
+
+start()
 
 
 '''def registr():

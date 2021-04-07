@@ -39,17 +39,19 @@ class DataBase:
         data = self.cursors.fetchall()
         return data
 
-
+    def getPassword(self):
+        sql = "SELECT password FROM users "
+        self.cursors.execute(sql)
+        data = self.cursors.fetchall()
+        return data
 
 
 #qwer.addUser('Art.by','23456')
 
 def input_log():
     read = DataBase()
-    #print(read.getLogin())
     lst = read.getLogin()
     del read
-    print(lst)
     log= input("Введите логин ")
 
     for el in lst:
@@ -62,21 +64,48 @@ def input_log():
 
 
 def input_password():
+    read = DataBase()
+    lst = read.getPassword()
+    del read
+    print(lst)
+
+
     pas= input("Введите пароль ")
-    if len(pas) < 6:
-        print('Пароль должен быть не менее 6 символов, попробуйте еще раз')
+    if len(pas) < 5:
+        print('Пароль должен быть не менее 5 символов, попробуйте еще раз')
     else:
+        for el in lst:
+            if pas == el["password"]:
+                return pas
+                break
+
+        return None
+
         return pas
 
 
-def shifr(pas):
-    home=pas[0]
-    end = pas[-1]
-    new_pas = pas.replace(home,end,1)
-    new_pas=new_pas[0:-1]+home
-    return new_pas
 
-print(input_log())
+
+
+def shifr_password():
+    while True:
+        pas = input("Введите пароль ")
+        if len(pas) < 5:
+            print('Пароль должен быть не менее 5 символов, попробуйте еще раз')
+        else:
+            home=pas[0]
+            end = pas[-1]
+            new_pas = pas.replace(home,end,1)
+            new_pas=new_pas[0:-1]+home
+            return new_pas
+            break
+
+#print(input_password())
+'''read = DataBase()
+lst = read.getUser()
+del read
+print(lst)'''
+
 '''while True:
     pas = input_password()
     if pas != None:
