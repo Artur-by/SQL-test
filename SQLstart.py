@@ -13,7 +13,7 @@ def start():
         if enter =="1":
             ide = start_entrance()
             if ide is not None:
-                return ide
+                return ide, None
         elif enter =="2":
             lpas = start_register()
             if lpas is not None:
@@ -52,22 +52,26 @@ def start_register():
         return log, pas2
 
 
-start()
 
-'''def registr():
-    type = input(" Если Вы преподаватель, нажмите 1, если студент нажмите 2 ")
+
+def registr(login, password):
     name = input(" Введите имя ")
-    theme = ''
-    lastname = input (" Введите фамилию ")
-    faculty  = input (" Введите факультет ")
+    lastname = input ("Введите фамилию ")
+    faculty = input("Введите факультет ")
+    type = input("Если Вы преподаватель, нажмите 1, если студент нажмите 2 ")
     if type == "1":
         theme = input ("Введите предмет " )
     elif type == "2":
-        theme = input(" Введите номер группы")
+        theme = input(" Введите номер группы ")
 
-    login = input (' Введите логин (не менее 6 символов)')
-    password = input (" Введите пароль (не менее 6 символов)")
-    return type, name, lastname, faculty, theme, login, password
+    return login, password,  name, lastname, faculty, type, theme
 
-print(registr())'''
+data = start()
+
+if data is None:
+    print('Всего наилучшего!')
+elif data[1] is None:
+    pass
+else:
+    print(registr(data[0], data[1]))
 
