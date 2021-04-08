@@ -33,13 +33,13 @@ class DataBase:                     # класс работы с SQL
         self.cursors.execute(sql, temp)
         self.connection.commit()
 
-    '''def getUser(self):                                              # метод запроса логина и пароля
-        sql = "SELECT * FROM users"
+    def getFullUser(self, id):                                              # метод запроса логина и пароля
+        sql = f"SELECT * FROM full_users WHERE ID={id}"
         self.cursors.execute(sql)
         data = self.cursors.fetchall()
-        print(data)'''
+        return data
 
-    def getLogin(self):                                                 # метод запроса логина и пароля
+    def getLogin(self):                                                # метод запроса логина и пароля
         sql = "SELECT ID, login, password FROM users "
         self.cursors.execute(sql)
         data = self.cursors.fetchall()
@@ -73,9 +73,9 @@ def record_fullus(ID, name, lastname, faculty, type, theme):            # фун
 def read_id(log):                                                       # функция запрашивает ID и возвращает число
     logid = DataBase()
     lstid= logid.getId(log)
-    for el in lstid:
-       idnew = el["ID"]
-    return idnew
+    #for el in lstid:
+    #   idnew = el["ID"]
+    return lstid[0]['ID']
 
 
 def input_log(log1):            # функция ввода логина и проверки на наличие в базе
@@ -97,7 +97,7 @@ def input_password():                   # функция ввода  парол�
     read = DataBase()
     lst = read.getPassword()
     del read
-    #print(lst)
+
 
 
     pas= input("Введите пароль ")
@@ -127,3 +127,6 @@ def shifr_password():                       # функция шифровани�
             new_pas=new_pas[0:-1]+home
             return new_pas
             break
+
+
+
