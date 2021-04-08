@@ -2,7 +2,7 @@ import pymysql
 from pymysql.cursors import DictCursor
 
 
-class DataBase:
+class DataBase:                     # класс работы с SQL
     def __init__(self):
         self.connection = self.connect()
         self.cursors = self.connection.cursor()
@@ -21,34 +21,64 @@ class DataBase:
         )
         return connection
 
-    def addUser(self, login, password):
+    def addUser(self, login, password):                              # метод записи логина и пароля пользователя
         sql = "INSERT INTO users (id, login, password) VALUES (%s, %s, %s)"
         temp = ["NULL", login, password]
         self.cursors.execute(sql, temp)
         self.connection.commit()
 
-    def getUser(self):
+    def addFullUser(self, ID, name, lastname, faculty, type, theme):  # метод записи данных пользователя
+        sql = "INSERT INTO full_users (ID, name, lastname, faculty, type, theme) VALUES (%s, %s, %s, %s, %s, %s)"
+        temp = [ID, name, lastname, faculty, type, theme]
+        self.cursors.execute(sql, temp)
+        self.connection.commit()
+
+    '''def getUser(self):                                              # метод запроса логина и пароля
         sql = "SELECT * FROM users"
         self.cursors.execute(sql)
         data = self.cursors.fetchall()
-        print(data)
+        print(data)'''
 
-    def getLogin(self):
+    def getLogin(self):                                                 # метод запроса логина и пароля
         sql = "SELECT ID, login, password FROM users "
         self.cursors.execute(sql)
         data = self.cursors.fetchall()
         return data
 
-    def getPassword(self):
+    def getPassword(self):                                              # метод запроса  пароля
         sql = "SELECT password FROM users "
         self.cursors.execute(sql)
         data = self.cursors.fetchall()
         return data
 
+    def getId(self, log):                                               # метод запроса ID
+        sql = f"SELECT ID FROM users WHERE login = '{log}'"
+        self.cursors.execute(sql)
+        data = self.cursors.fetchall()
+        return data
 
-#qwer.addUser('Art.by','23456')
 
-def input_log(log1):
+
+def record_lpas(log,pas):                                                # функция записи логина и пароля
+    lpas = DataBase()
+    lpas.addUser(log,pas)
+    lpas.getLogin()
+    del lpas
+
+def record_fullus(ID, name, lastname, faculty, type, theme):            # функция записи данных пользователя
+    fullus = DataBase()
+    fullus.addFullUser(ID, name, lastname, faculty, type, theme)
+    del fullus
+
+def read_id(log):                                                       # функция запрашивает ID и возвращает число
+    logid = DataBase()
+    lstid= logid.getId(log)
+    for el in lstid:
+       idnew = el["ID"]
+    return idnew
+
+
+def input_log(log1):            # функция ввода логина и проверки на наличие в базе
     read = DataBase()
     lst = read.getLogin()
     del read
@@ -63,13 +93,11 @@ def input_log(log1):
     return None
 
 
-
-
-def input_password():
+def input_password():                   # функция ввода  пароля не менее 5 символов
     read = DataBase()
     lst = read.getPassword()
     del read
-    print(lst)
+    #print(lst)
 
 
     pas= input("Введите пароль ")
@@ -87,9 +115,7 @@ def input_password():
 
 
 
-
-
-def shifr_password():
+def shifr_password():                       # функция шифрования пароля, меняем первый и последний элемент местами
     while True:
         pas = input("Введите пароль ")
         if len(pas) < 5:
@@ -101,14 +127,3 @@ def shifr_password():
             new_pas=new_pas[0:-1]+home
             return new_pas
             break
-
-
-
-#print(input_log())
-
-
-
-
-
-
-
