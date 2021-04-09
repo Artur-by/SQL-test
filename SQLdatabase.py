@@ -33,7 +33,19 @@ class DataBase:                     # класс работы с SQL
         self.cursors.execute(sql, temp)
         self.connection.commit()
 
-    def getFullUser(self, id):                                              # метод запроса логина и пароля
+    def addMatter(self, ID, number, theme,note):                             # метод записи предметов
+        sql = "INSERT INTO matter (ID, number, theme, note) VALUES (%s, %s, %s, %s)"
+        temp = [ID,number, theme, note]
+        self.cursors.execute(sql, temp)
+        self.connection.commit()
+
+    def getFullUserall(self):                                           # метод запроса данных
+        sql = f"SELECT * FROM full_users"
+        self.cursors.execute(sql)
+        data = self.cursors.fetchall()
+        return data
+
+    def getFullUser(self, id):                                           # метод запроса данных по ID
         sql = f"SELECT * FROM full_users WHERE ID={id}"
         self.cursors.execute(sql)
         data = self.cursors.fetchall()

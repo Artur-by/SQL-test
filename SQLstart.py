@@ -70,6 +70,42 @@ elif data[1] is None:                       # ecли возвращается т
     person=DataBase()
     data =person.getFullUser(data[0])
     print(data[0]['lastname'],data[0]['name'])                  # печатаем имя и фамилию пользователя
+    if data[0]['type'] == 1:
+        while True:
+            enter = input("Выберите действия: 1-добавить пользователя, 2 - просмотреть информацию, 3 - поставить оценку ")
+            if enter == "1":
+                data = start_register()
+                nextdata = registr(data[0], data[1])
+
+                print('Имя:', nextdata[2], 'Фамилия:', nextdata[3], 'Факультет:', nextdata[4], 'Предмет/Группа', nextdata[6])
+                enter = input('Записать данные?  1 -ДА, 0 -НЕТ ')
+                if enter == '1':
+                    record_lpas(data[0], data[1])
+                    dataid = read_id(data[0])
+                    record_fullus(dataid, nextdata[2], nextdata[3], nextdata[4], nextdata[5], nextdata[6])
+                    print('Пользователь успешно зарегистрирован')
+            elif enter =='2':
+                qwer = DataBase()
+                users =qwer.getFullUserall()
+                for i in range(len(users)):
+                    if users [i]['type'] == 2:
+                        print(users [i]['name'], users [i]['lastname'], users [i]['faculty'], users [i]['theme'])
+            elif enter == '3':
+                itemname = input('Введите название предмета')
+                groupnumber = input ('Введите номер группы ')
+                qwer = DataBase()
+                users = qwer.getFullUserall()
+                for i in range(len(users)):
+                    if users[i]['theme'] == groupnumber:
+                        print(users[i]['name'], users[i]['lastname'], users[i]['faculty'], users[i]['theme'])
+                        note = input ('Введите оценку')
+                        item = qwer.addMatter(users[i]['ID'],users[i]['theme'], itemname, note)
+
+
+
+
+    else:
+        pass
 
 else:
     data = registr(data[0], data[1])        # если возвращается Логин и пароль переходим к записи нового пользователя
@@ -80,7 +116,8 @@ else:
         record_lpas(data[0], data[1])
         dataid = read_id(data[0])
         record_fullus(dataid, data[2], data[3], data[4], data[5], data[6])
-    elif enter =='2':
+        print('Вы успешно зарегистрированы, перезайдите в систему')
+    elif enter =='0':
         pass
 
 
