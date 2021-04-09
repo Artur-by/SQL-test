@@ -39,6 +39,12 @@ class DataBase:                     # класс работы с SQL
         self.cursors.execute(sql, temp)
         self.connection.commit()
 
+    def getMatter(self):
+        sql = f"SELECT * FROM matter"
+        self.cursors.execute(sql)
+        data = self.cursors.fetchall()
+        return data
+
     def getFullUserall(self):                                           # метод запроса данных
         sql = f"SELECT * FROM full_users"
         self.cursors.execute(sql)

@@ -70,7 +70,7 @@ elif data[1] is None:                       # ecли возвращается т
     person=DataBase()
     data =person.getFullUser(data[0])
     print(data[0]['lastname'],data[0]['name'])                  # печатаем имя и фамилию пользователя
-    if data[0]['type'] == 1:
+    if data[0]['type'] == 1:                                    # если тип 1-преподаватель, то :
         while True:
             enter = input("Выберите действия: 1-добавить пользователя, 2 - просмотреть информацию, 3 - поставить оценку ")
             if enter == "1":
@@ -91,21 +91,28 @@ elif data[1] is None:                       # ecли возвращается т
                     if users [i]['type'] == 2:
                         print(users [i]['name'], users [i]['lastname'], users [i]['faculty'], users [i]['theme'])
             elif enter == '3':
-                itemname = input('Введите название предмета')
+                itemname = input('Введите название предмета ')
                 groupnumber = input ('Введите номер группы ')
                 qwer = DataBase()
                 users = qwer.getFullUserall()
                 for i in range(len(users)):
                     if users[i]['theme'] == groupnumber:
                         print(users[i]['name'], users[i]['lastname'], users[i]['faculty'], users[i]['theme'])
-                        note = input ('Введите оценку')
+                        note = input ('Введите оценку ')
                         item = qwer.addMatter(users[i]['ID'],users[i]['theme'], itemname, note)
-
-
-
-
+                #del  qwer
     else:
-        pass
+        qwer = DataBase()
+        note = qwer.getMatter()
+        print('Ваши предметы и оценки:')
+        rating = 0                              # счетчик оценок
+        count = 0
+        for i in range(len(note)):              # цикл по ID студента
+            if note[i]['ID'] == data[0]['ID']:
+                print(note[i]['theme'], note[i]['note'])
+                rating += note[i]['note']
+                count +=1
+        print('Ваш средний бал', round((rating/count),2))
 
 else:
     data = registr(data[0], data[1])        # если возвращается Логин и пароль переходим к записи нового пользователя
