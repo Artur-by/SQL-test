@@ -39,6 +39,14 @@ class DataBase:                     # класс работы с SQL
         self.cursors.execute(sql, temp)
         self.connection.commit()
 
+    def updateMatter (self, id, theme,   note):
+        sql = f"UPDATE matter SET note={note}  WHERE ID ={id} AND theme='{theme}'"
+        #print(sql)
+        #temp = [id, note]
+        self.cursors.execute(sql)
+        self.connection.commit()
+
+
     def getMatter(self):
         sql = f"SELECT * FROM matter"
         self.cursors.execute(sql)
@@ -147,4 +155,5 @@ def shifr_password():                       # функция шифровани�
             break
 
 
-
+qwer = DataBase()
+qwer.updateMatter(23,'новейшая история', 3)
